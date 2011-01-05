@@ -3,11 +3,9 @@ require File.expand_path(File.dirname(__FILE__) + '/edgecase')
 # Implement a DiceSet Class here:
 #
 class DiceSet
+  attr_reader :values
   def roll(num)
-    rolls = []
-    num.each {|i|
-      rolls[i] = rand(1..6)
-    }
+    @values = num.times.map {Random.new.rand(1..num).to_i}
   end
 end
 
@@ -45,7 +43,7 @@ class AboutDiceProject < EdgeCase::Koan
     dice.roll(5)
     second_time = dice.values
 
-    assert_not_equal first_time, second_time,
+    assert_not_equal first_time.object_id, second_time.object_id,
       "Two rolls should not be equal"
 
     # THINK ABOUT IT:
